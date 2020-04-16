@@ -22,7 +22,7 @@ impl ModelParameters for Parameters {
 
 impl SWModelParameters for Parameters {
     /// COEFF_A = 0
-    const COEFF_A: Fq = field_new!(Fq, BigInteger256([0x0, 0x0, 0x0, 0x0, 0x0, 0x0]));
+    const COEFF_A: Fq = field_new!(Fq, BigInteger256([0x0, 0x0, 0x0, 0x0]));
 
     /// TODO
     const COEFF_B: Fq = field_new!(

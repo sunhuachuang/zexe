@@ -12,7 +12,7 @@ impl Fp256Parameters for FrParameters {}
 impl FpParameters for FrParameters {
     type BigInt = BigInteger;
 
-    const MODULES: BigInteger = BigInteger([
+    const MODULUS: BigInteger = BigInteger([
         0x43e1f593f0000001,
         0x2833e84879b97091,
         0xb85045b68181585d,

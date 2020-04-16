@@ -44,25 +44,15 @@ impl Fp2Parameters for Fq2Parameters {
 
     /// TODO
     #[inline(always)]
-    fn mul_fp_by_nonresidue(fp: &Self::Fp) -> Self::Fp {
-        let copy = *fp;
-        let t0 = copy.c0;
-        let t1 = copy.c1;
-
-        // 8*x*i + 8*y
-        copy.double();
-        copy.double();
-        copy.double();
-
-        // 9*y
-        copy.c0.add_assign(&t0);
-        // (9*y - x)
-        copy.c0.sub_assign(&t1);
-
-        // (9*x)i
-        copy.c1.add_assign(&t1);
-        // (9*x + y)
-        copy.c1.add_assign(&t0);
-        copy
+    fn mul_fp_by_nonresidue(x: &Self::Fp) -> Self::Fp {
+        // times 9
+        let mut y = x.clone();
+        y.double_in_place(); // 2x
+        y += x; // 3x
+        y.double_in_place(); // 6x
+        y += x; // 7x
+        y.double_in_place(); // 8x
+        y += x; // 9x
+        y
     }
 }

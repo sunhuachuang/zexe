@@ -1,5 +1,5 @@
 use crate::bn_256::*;
-use algebra_core::{biginteger::BigInteger384 as BigInteger, field_new, fields::*};
+use algebra_core::{biginteger::BigInteger256 as BigInteger, field_new, fields::*};
 
 pub type Fq12 = Fp12<Fq12Parameters>;
 

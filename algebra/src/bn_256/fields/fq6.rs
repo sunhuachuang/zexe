@@ -245,12 +245,15 @@ impl Fp6Parameters for Fq6Parameters {
     /// Multiply this element by the quadratic nonresidue 1 + u.
     /// Make this generic.
     fn mul_fp2_by_nonresidue(fe: &Fq2) -> Fq2 {
-        let copy = *fe;
-        use std::mem::swap;
-        swap(&mut copy.c0, &mut copy.c1);
-        swap(&mut copy.c0, &mut copy.c2);
-        // c0, c1, c2 -> c2, c0, c1
-        Fq2::mul_fp_by_nonresidue(copy.c0);
-        copy
+        let seven_c1 = Fq2Parameters::mul_fp_by_nonresidue(&fe.c1); // 9*c1
+        let mut c0 = seven_c1.clone();
+        c0.double_in_place(); // 2*9*c1
+        c0 += &seven_c1; // 3*9*c1
+
+        let mut c1 = fe.c0;
+        c1.double_in_place();
+        c1 += &fe.c0;
+
+        Fq2::new(c0, c1)
     }
 }

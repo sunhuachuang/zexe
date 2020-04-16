@@ -1,6 +1,10 @@
-use algebra_core::curves::bn::{Bn, BnParameters};
+use algebra_core::{
+    biginteger::BigInteger256,
+    curves::bn::{Bn, BnParameters},
+    field_new,
+};
 
-use crate::bn_256::{Fq, Fq12Parameters, Fq2Parameters, Fq6Parameters};
+use crate::bn_256::{Fq, Fq12Parameters, Fq2, Fq2Parameters, Fq6Parameters};
 
 pub mod g1;
 pub mod g2;
