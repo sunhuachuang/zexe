@@ -9,7 +9,7 @@ pub struct Fq6Parameters;
 impl Fp6Parameters for Fq6Parameters {
     type Fp2Params = Fq2Parameters;
 
-    /// TODO
+    /// (Not used)
     /// NONRESIDUE = (U + 9)
     const NONRESIDUE: Fq2 = field_new!(
         Fq2,
@@ -245,10 +245,12 @@ impl Fp6Parameters for Fq6Parameters {
     /// Multiply this element by the quadratic nonresidue 1 + u.
     /// Make this generic.
     fn mul_fp2_by_nonresidue(fe: &Fq2) -> Fq2 {
-        let mut copy = *fe;
-        let t0 = copy.c0;
-        copy.c0 -= &fe.c1;
-        copy.c1 += &t0;
+        let copy = *fe;
+        use std::mem::swap;
+        swap(&mut copy.c0, &mut copy.c1);
+        swap(&mut copy.c0, &mut copy.c2);
+        // c0, c1, c2 -> c2, c0, c1
+        Fq2::mul_fp_by_nonresidue(copy.c0);
         copy
     }
 }

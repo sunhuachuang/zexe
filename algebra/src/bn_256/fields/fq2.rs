@@ -8,12 +8,11 @@ pub struct Fq2Parameters;
 impl Fp2Parameters for Fq2Parameters {
     type Fp = Fq;
 
-    /// TODO
-    /// NONRESIDUE = -1
+    /// (Not used)
     const NONRESIDUE: Fq = field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0,]));
 
-    /// TODO
-    /// QUADRATIC_NONRESIDUE = (U + 1)
+    /// (Not used)
+    /// QUADRATIC_NONRESIDUE = (U + 9)
     const QUADRATIC_NONRESIDUE: (Fq, Fq) = (
         field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0,])),
         field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0,])),
@@ -46,6 +45,24 @@ impl Fp2Parameters for Fq2Parameters {
     /// TODO
     #[inline(always)]
     fn mul_fp_by_nonresidue(fp: &Self::Fp) -> Self::Fp {
-        -(*fp)
+        let copy = *fp;
+        let t0 = copy.c0;
+        let t1 = copy.c1;
+
+        // 8*x*i + 8*y
+        copy.double();
+        copy.double();
+        copy.double();
+
+        // 9*y
+        copy.c0.add_assign(&t0);
+        // (9*y - x)
+        copy.c0.sub_assign(&t1);
+
+        // (9*x)i
+        copy.c1.add_assign(&t1);
+        // (9*x + y)
+        copy.c1.add_assign(&t0);
+        copy
     }
 }
