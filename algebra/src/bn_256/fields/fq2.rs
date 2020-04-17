@@ -8,14 +8,14 @@ pub struct Fq2Parameters;
 impl Fp2Parameters for Fq2Parameters {
     type Fp = Fq;
 
-    /// (Not used)
-    const NONRESIDUE: Fq = field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0,]));
+    /// (not used)
+    const NONRESIDUE: Fq = field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0]));
 
-    /// (Not used)
+    /// (not used)
     /// QUADRATIC_NONRESIDUE = (U + 9)
     const QUADRATIC_NONRESIDUE: (Fq, Fq) = (
-        field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0,])),
-        field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0,])),
+        field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0])),
+        field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0])),
     );
 
     /// Coefficients for the Frobenius automorphism.
@@ -42,17 +42,8 @@ impl Fp2Parameters for Fq2Parameters {
         ),
     ];
 
-    /// TODO
     #[inline(always)]
-    fn mul_fp_by_nonresidue(x: &Self::Fp) -> Self::Fp {
-        // times 9
-        let mut y = x.clone();
-        y.double_in_place(); // 2x
-        y += x; // 3x
-        y.double_in_place(); // 6x
-        y += x; // 7x
-        y.double_in_place(); // 8x
-        y += x; // 9x
-        y
+    fn mul_fp_by_nonresidue(fp: &Self::Fp) -> Self::Fp {
+        -(*fp)
     }
 }

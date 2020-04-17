@@ -13,8 +13,8 @@ impl Fp6Parameters for Fq6Parameters {
     /// NONRESIDUE = (U + 9)
     const NONRESIDUE: Fq2 = field_new!(
         Fq2,
-        field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0,])),
-        field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0,])),
+        field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0])),
+        field_new!(Fq, BigInteger([0x0, 0x0, 0x0, 0x0])),
     );
 
     const FROBENIUS_COEFF_FP6_C1: [Fq2; 6] = [
@@ -241,19 +241,30 @@ impl Fp6Parameters for Fq6Parameters {
         ),
     ];
 
-    /// TODO
-    /// Multiply this element by the quadratic nonresidue 1 + u.
+    /// Multiply this element by quadratic nonresidue 9 + u.
     /// Make this generic.
     fn mul_fp2_by_nonresidue(fe: &Fq2) -> Fq2 {
-        let seven_c1 = Fq2Parameters::mul_fp_by_nonresidue(&fe.c1); // 9*c1
-        let mut c0 = seven_c1.clone();
-        c0.double_in_place(); // 2*9*c1
-        c0 += &seven_c1; // 3*9*c1
+        let mut copy = *fe;
 
-        let mut c1 = fe.c0;
-        c1.double_in_place();
-        c1 += &fe.c0;
+        // (xi+y)(i+9) = (9x+y)i+(9y-x)
+        let t0 = copy.c0;
+        let t1 = copy.c1;
 
-        Fq2::new(c0, c1)
+        // 8*x*i + 8*y
+        copy.double_in_place();
+        copy.double_in_place();
+        copy.double_in_place();
+
+        // 9*y
+        copy.c0 += &t0;
+        // (9*y - x)
+        copy.c0 -= &t1;
+
+        // (9*x)i
+        copy.c1 += &t1;
+        // (9*x + y)
+        copy.c1 += &t0;
+
+        copy
     }
 }
