@@ -68,16 +68,18 @@ fn test_bilinearity() {
     let b: G2Projective = rng.gen();
     let s: Fr = rng.gen();
 
-    let mut sa = a;
+    let mut sa: G1Projective = a;
     sa.mul_assign(s);
-    let mut sb = b;
+    let mut sb: G2Projective = b;
     sb.mul_assign(s);
 
     let ans1 = Bn_256::pairing(sa, b);
     let ans2 = Bn_256::pairing(a, sb);
+
     let ans3 = Bn_256::pairing(a, b).pow(s.into_repr());
 
     assert_eq!(ans1, ans2);
+    assert_eq!(ans1, ans3);
     assert_eq!(ans2, ans3);
 
     assert_ne!(ans1, Fq12::one());
@@ -102,11 +104,13 @@ fn test_g1_generator_raw() {
 
         if let Some(y) = rhs.sqrt() {
             let p = G1Affine::new(x, if y < -y { y } else { -y }, false);
-            assert!(!p.is_in_correct_subgroup_assuming_on_curve());
+            assert!(p.is_in_correct_subgroup_assuming_on_curve());
 
             let g1 = p.scale_by_cofactor();
+            assert_eq!(g1, p.into());
+
             if !g1.is_zero() {
-                assert_eq!(i, 4);
+                assert_eq!(i, 1);
                 let g1 = G1Affine::from(g1);
 
                 assert!(g1.is_in_correct_subgroup_assuming_on_curve());

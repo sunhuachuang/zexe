@@ -82,10 +82,10 @@ fn test_fq12() {
 //#[test]
 fn test_negative_one() {
     let neg_one = Fq::new(BigInteger256([
-        0x974bc177a0000006,
-        0xf13771b2da58a367,
-        0x51e1a2470908122e,
-        0x2259d6b14729c0fa,
+        4332616871279656262u64,
+        10917124144477883021u64,
+        13281191951274694749u64,
+        3486998266802970665u64,
     ]));
     assert_eq!(neg_one, -Fq::one());
 }

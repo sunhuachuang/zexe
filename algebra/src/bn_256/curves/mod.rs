@@ -22,7 +22,7 @@ pub type Bn_256 = Bn<Parameters>;
 pub struct Parameters;
 
 impl BnParameters for Parameters {
-    const U: &'static [u64] = &[0, 4965661367192848881];
+    const U: &'static [u64] = &[4965661367192848881];
     const SIX_U_PLUS_2_NAF: &'static [i8] = &[
         0, 0, 0, 1, 0, 1, 0, -1, 0, 0, 1, -1, 0, 0, 1, 0, 0, 1, 1, 0, -1, 0, 0, 1, 0, -1, 0, 0, 0,
         0, 1, 1, 1, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, -1, 0, 0, 1, 1, 0, 0, -1, 0, 0, 0, 1, 1, 0,
