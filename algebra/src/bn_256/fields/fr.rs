@@ -60,25 +60,25 @@ impl FpParameters for FrParameters {
 
     // use in (also bellman) - SqrtFiled - legendre
     const MODULUS_MINUS_ONE_DIV_TWO: BigInteger = BigInteger([
-        0xa1f0fac9f8000000,
-        0x9419f4243cdcb848,
-        0xdc2822db40c0ac2e,
-        0x183227397098d014,
+        11669102379873075200u64,
+        10671829228508198984u64,
+        15863968012492123182u64,
+        1743499133401485332u64,
     ]);
 
     // use in SqrtField - sqrt
     const T: BigInteger = BigInteger([
-        0x9b9709143e1f593f,
-        0x181585d2833e8487,
-        0x131a029b85045b68,
-        0x30644e72e,
+        11211439779908376895u64,
+        1735440370612733063u64,
+        1376415503089949544u64,
+        12990080814u64,
     ]);
 
     // use in SqrtField - sqrt
     const T_MINUS_ONE_DIV_TWO: BigInteger = BigInteger([
-        0xcdcb848a1f0faca0,
-        0xc0ac2e9419f4243,
-        0x98d014dc2822db4,
-        0x183227397,
+        14829091926808964255u64,
+        867720185306366531u64,
+        688207751544974772u64,
+        6495040407u64,
     ]);
 }
