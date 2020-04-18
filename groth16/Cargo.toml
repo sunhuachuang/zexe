@@ -32,7 +32,7 @@ rayon = { version = "1", optional = true }
 
 [dev-dependencies]
 csv = { version = "1" }
-algebra = { path = "../algebra", default-features = false, features = [ "bls12_377", "bls12_381", "sw6" ] }
+algebra = { path = "../algebra", default-features = false, features = [ "bls12_377", "bls12_381", "sw6", "bn_256" ] }
 
 [features]
 default = ["parallel"]
